@@ -6,31 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Forge Customs | Powered by Meena Technologies</title>
     
-    <!-- Error Tracking Shield -->
+    <!-- Process Shim for Browser Environment -->
     <script>
-      window.onerror = function(msg, url, lineNo, columnNo, error) {
-        console.error('Boot Error:', msg, url, lineNo, columnNo, error);
-        const root = document.getElementById('root');
-        if (root) {
-          root.innerHTML = `
-            <div style="padding: 2rem; color: #06b6d4; font-family: sans-serif; text-align: center; background: #020617; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-              <h1 style="font-size: 2rem; margin-bottom: 1rem;">SYSTEM INITIALIZATION ERROR</h1>
-              <p style="color: #64748b; margin-bottom: 2rem;">Hardware Link Failure: ${msg}</p>
-              <button onclick="location.reload()" style="background: #06b6d4; color: #020617; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: bold; cursor: pointer;">RETRY LINK</button>
-            </div>
-          `;
-        }
-        return false;
-      };
-    </script>
-
-    <!-- Global Shim Layer -->
-    <script>
-      window.process = { 
-        env: { 
-          API_KEY: "" 
-        } 
-      };
+      window.process = { env: { API_KEY: "" } };
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,9 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-      :root {
-        --cyan: #06b6d4;
-      }
+      :root { --cyan: #06b6d4; }
       body {
         font-family: 'Inter', sans-serif;
         background-color: #020617;
@@ -76,11 +52,8 @@
         -webkit-text-fill-color: transparent;
       }
 
-      @keyframes spin-slow {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-      .animate-spin-slow { animation: spin-slow 12s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .animate-spin-slow { animation: spin 10s linear infinite; }
     </style>
 
     <script type="importmap">
@@ -99,14 +72,10 @@
   <body>
     <div class="perspective-grid"></div>
     <div id="root">
-      <!-- Loading State that disappears when React mounts -->
-      <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #020617; font-family: sans-serif;">
-        <div style="width: 40px; height: 40px; border: 3px solid rgba(6, 182, 212, 0.2); border-top-color: #06b6d4; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-        <p style="color: #06b6d4; margin-top: 20px; font-weight: bold; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.75rem;">Initializing Forge...</p>
+      <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #020617;">
+        <div style="width: 32px; height: 32px; border: 2px solid rgba(6, 182, 212, 0.1); border-top-color: #06b6d4; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+        <p style="color: #06b6d4; margin-top: 16px; font-family: sans-serif; font-size: 10px; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase;">Meena Tech Core: Initializing...</p>
       </div>
-      <style>
-        @keyframes spin { to { transform: rotate(360deg); } }
-      </style>
     </div>
   </body>
 </html>

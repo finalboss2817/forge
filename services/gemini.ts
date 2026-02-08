@@ -3,32 +3,21 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { BuildRecommendation, DiagnosticResult } from "../types";
 
 /**
- * Safely initializes the Gemini API client.
- * Uses process.env.API_KEY which is expected to be injected.
+ * Accesses the PC build architecture logic.
+ * Follows guidelines to use process.env.API_KEY exclusively and initialize 
+ * right before making an API call to ensure the latest key is used.
  */
-const getAIClient = () => {
-  // Defensive check for the API key in a browser-safe way
-  const apiKey = (typeof process !== 'undefined' && process.env && process.env.API_KEY) 
-    ? process.env.API_KEY 
-    : (window as any).process?.env?.API_KEY;
-
-  if (!apiKey || apiKey === "") {
-    console.error("Meena Technologies Vault: API_KEY is missing from environment.");
-    throw new Error("API_KEY_MISSING");
-  }
-
-  return new GoogleGenAI({ apiKey });
-};
 
 export const getBuildSuggestion = async (prompt: string): Promise<BuildRecommendation> => {
-  const ai = getAIClient();
+  // Create a new instance right before making an API call to ensure it always uses the most up-to-date API key
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: [{ parts: [{ text: `Generate a detailed PC build recommendation based on these requirements: ${prompt}` }] }],
+      model: 'gemini-3-pro-preview', // Upgrade to Pro for complex architecture tasks
+      contents: `Generate a detailed PC build recommendation for: ${prompt}`,
       config: {
-        systemInstruction: "You are an elite PC hardware architect for Meena Technologies. Provide professional, specific, and optimized build lists in JSON format. Use Indian Rupee (₹) for estimates if relevant to the context, otherwise standard USD. Your tone is technical, expert, and premium.",
+        systemInstruction: "You are the head of PC architecture at Meena Technologies. Provide professional, specific build recommendations in JSON format. Use Indian Rupee (₹).",
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,
@@ -56,24 +45,24 @@ export const getBuildSuggestion = async (prompt: string): Promise<BuildRecommend
       },
     });
 
-    const text = response.text;
-    if (!text) throw new Error("Empty response from AI core.");
-    return JSON.parse(text);
+    // Correct extraction: response.text is a property, not a method
+    return JSON.parse(response.text || '{}');
   } catch (error) {
-    console.error("Silicon Architect Failure:", error);
+    console.error("Architect Logic Failure:", error);
     throw error;
   }
 };
 
 export const getDiagnosticMatrix = async (issue: string): Promise<DiagnosticResult> => {
-  const ai = getAIClient();
+  // Create a new instance right before making an API call to ensure it always uses the most up-to-date API key
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: [{ parts: [{ text: `Analyze this hardware symptom and provide a diagnostic report: ${issue}` }] }],
+      model: 'gemini-3-pro-preview', // Upgrade to Pro for complex diagnostic tasks
+      contents: `Diagnose this PC hardware symptom: ${issue}`,
       config: {
-        systemInstruction: "You are a senior hardware diagnostic specialist at Meena Technologies Mumbai. Provide component-level diagnostic analysis in JSON format. Be precise about potential hardware failures.",
+        systemInstruction: "You are a senior hardware technician at Meena Technologies. Provide a component-level diagnostic report in JSON format.",
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,
@@ -97,11 +86,10 @@ export const getDiagnosticMatrix = async (issue: string): Promise<DiagnosticResu
       },
     });
 
-    const text = response.text;
-    if (!text) throw new Error("Empty diagnostic signal.");
-    return JSON.parse(text);
+    // Correct extraction: response.text is a property, not a method
+    return JSON.parse(response.text || '{}');
   } catch (error) {
-    console.error("Diagnostic Matrix Failure:", error);
+    console.error("Diagnostic Logic Failure:", error);
     throw error;
   }
 };
