@@ -26,5 +26,5 @@ export enum AppSection {
   ARCHITECT = 'architect',
   DIAGNOSTICS = 'diagnostics',
   SERVICES = 'services',
-  GALLERY = 'gallery'
+  ARCHIVE = 'archive'
 }

@@ -11,21 +11,21 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
 
   const navItems = [
     { label: 'Architect', id: 'architect' },
-    { label: 'Archive', id: 'gallery' },
+    { label: 'Archive', id: 'archive' },
     { label: 'Services', id: 'services' },
     { label: 'Diagnostics', id: 'diagnostics' },
   ];
 
   const handleNavClick = (id: string) => {
     setIsMenuOpen(false);
-    window.location.hash = id === 'gallery' ? 'archive' : id;
+    // Standard link behavior with offset adjustment if needed can be handled here
   };
 
   return (
     <>
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-full max-w-6xl px-4">
         <div className="glass-card rounded-2xl border-white/20 px-6 h-18 flex items-center justify-between shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] relative z-[101]">
-          <a href="#home" className="flex items-center space-x-5 group min-w-fit py-2">
+          <a href="#home" className="flex items-center space-x-5 group min-w-fit py-2" onClick={() => handleNavClick('home')}>
             <div className="w-10 h-10 md:w-12 md:h-12 bg-cyan-500 rounded-xl flex items-center justify-center transform group-hover:rotate-[360deg] transition-all duration-700 shadow-[0_0_30px_rgba(6,182,212,0.6)] shrink-0">
               <span className="text-slate-950 font-black text-2xl md:text-3xl">F</span>
             </div>
@@ -40,9 +40,9 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
             {navItems.map((item) => (
               <a
                 key={item.id}
-                href={`#${item.id === 'gallery' ? 'archive' : item.id}`}
+                href={`#${item.id}`}
                 className={`text-[11px] font-black uppercase tracking-[0.25em] transition-all hover:text-cyan-400 hover:glow-text ${
-                  activeSection === (item.id === 'gallery' ? 'archive' : item.id) ? 'text-cyan-400 glow-text' : 'text-slate-400'
+                  activeSection === item.id ? 'text-cyan-400 glow-text' : 'text-slate-400'
                 }`}
               >
                 {item.label}
@@ -78,33 +78,34 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
         <div className={`lg:hidden fixed inset-0 z-[-1] transition-all duration-500 ease-in-out ${
           isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}>
-          {/* Backdrop Blur */}
           <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-2xl" onClick={() => setIsMenuOpen(false)} />
           
           <div className="relative h-full flex flex-col justify-center px-8 space-y-8">
             <div className="space-y-4">
               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 mb-6">Navigation Deck</p>
               {navItems.map((item, idx) => (
-                <button
+                <a
                   key={item.id}
-                  onClick={() => handleNavClick(item.id)}
+                  href={`#${item.id}`}
+                  onClick={() => setIsMenuOpen(false)}
                   className={`block w-full text-left font-display text-4xl font-black uppercase tracking-tighter transition-all hover:translate-x-4 ${
-                    activeSection === (item.id === 'gallery' ? 'archive' : item.id) ? 'text-cyan-400' : 'text-white'
+                    activeSection === item.id ? 'text-cyan-400' : 'text-white'
                   }`}
                   style={{ transitionDelay: `${idx * 50}ms` }}
                 >
                   {item.label}
-                </button>
+                </a>
               ))}
             </div>
 
             <div className="pt-8 border-t border-white/10">
-              <button 
-                onClick={() => handleNavClick('architect')}
-                className="w-full py-6 bg-cyan-500 text-slate-950 font-black rounded-2xl text-sm uppercase tracking-widest shadow-[0_20px_40px_rgba(6,182,212,0.3)]"
+              <a 
+                href="#architect"
+                onClick={() => setIsMenuOpen(false)}
+                className="block text-center w-full py-6 bg-cyan-500 text-slate-950 font-black rounded-2xl text-sm uppercase tracking-widest shadow-[0_20px_40px_rgba(6,182,212,0.3)]"
               >
                 INITIALIZE BUILD
-              </button>
+              </a>
               <div className="mt-8 flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
                 <span>Est. 2014</span>
                 <span className="text-cyan-500">Meena Technologies</span>
