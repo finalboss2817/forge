@@ -16,16 +16,19 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
     { label: 'Diagnostics', id: 'diagnostics' },
   ];
 
-  const handleNavClick = (id: string) => {
+  const handleNavClick = () => {
     setIsMenuOpen(false);
-    // Standard link behavior with offset adjustment if needed can be handled here
   };
 
   return (
     <>
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-full max-w-6xl px-4">
-        <div className="glass-card rounded-2xl border-white/20 px-6 h-18 flex items-center justify-between shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] relative z-[101]">
-          <a href="#home" className="flex items-center space-x-5 group min-w-fit py-2" onClick={() => handleNavClick('home')}>
+      {/* 
+          Note: We use a full-width container for fixed positioning 
+          to avoid 'transform' issues with 'fixed' children.
+      */}
+      <nav className="fixed top-6 left-0 right-0 z-[100] px-4 pointer-events-none">
+        <div className="max-w-6xl mx-auto glass-card rounded-2xl border-white/20 px-6 h-18 flex items-center justify-between shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] pointer-events-auto">
+          <a href="#home" className="flex items-center space-x-5 group min-w-fit py-2" onClick={handleNavClick}>
             <div className="w-10 h-10 md:w-12 md:h-12 bg-cyan-500 rounded-xl flex items-center justify-center transform group-hover:rotate-[360deg] transition-all duration-700 shadow-[0_0_30px_rgba(6,182,212,0.6)] shrink-0">
               <span className="text-slate-950 font-black text-2xl md:text-3xl">F</span>
             </div>
@@ -59,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
           {/* Hamburger Toggle */}
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden w-12 h-12 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 transition-colors hover:bg-white/10"
+            className="lg:hidden w-12 h-12 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 transition-colors hover:bg-white/10 relative z-[110]"
             aria-label="Toggle Menu"
           >
             {isMenuOpen ? (
@@ -73,47 +76,47 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
             )}
           </button>
         </div>
+      </nav>
 
-        {/* Mobile Menu Overlay */}
-        <div className={`lg:hidden fixed inset-0 z-[-1] transition-all duration-500 ease-in-out ${
-          isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}>
-          <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-2xl" onClick={() => setIsMenuOpen(false)} />
-          
-          <div className="relative h-full flex flex-col justify-center px-8 space-y-8">
-            <div className="space-y-4">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 mb-6">Navigation Deck</p>
-              {navItems.map((item, idx) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block w-full text-left font-display text-4xl font-black uppercase tracking-tighter transition-all hover:translate-x-4 ${
-                    activeSection === item.id ? 'text-cyan-400' : 'text-white'
-                  }`}
-                  style={{ transitionDelay: `${idx * 50}ms` }}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-
-            <div className="pt-8 border-t border-white/10">
-              <a 
-                href="#architect"
+      {/* Mobile Menu Overlay - Placed outside the constrained container for absolute full-screen coverage */}
+      <div className={`fixed inset-0 z-[105] lg:hidden transition-all duration-500 ease-in-out ${
+        isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      }`}>
+        <div className="absolute inset-0 bg-slate-950/98 backdrop-blur-3xl" onClick={() => setIsMenuOpen(false)} />
+        
+        <div className="relative h-full flex flex-col justify-center px-10 space-y-10">
+          <div className="space-y-6">
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Navigation Deck</p>
+            {navItems.map((item, idx) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
                 onClick={() => setIsMenuOpen(false)}
-                className="block text-center w-full py-6 bg-cyan-500 text-slate-950 font-black rounded-2xl text-sm uppercase tracking-widest shadow-[0_20px_40px_rgba(6,182,212,0.3)]"
+                className={`block w-full text-left font-display text-5xl font-black uppercase tracking-tighter transition-all hover:translate-x-4 ${
+                  activeSection === item.id ? 'text-cyan-400 glow-text' : 'text-white'
+                }`}
+                style={{ transitionDelay: `${idx * 50}ms` }}
               >
-                INITIALIZE BUILD
+                {item.label}
               </a>
-              <div className="mt-8 flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                <span>Est. 2014</span>
-                <span className="text-cyan-500">Meena Technologies</span>
-              </div>
+            ))}
+          </div>
+
+          <div className="pt-10 border-t border-white/10">
+            <a 
+              href="#architect"
+              onClick={() => setIsMenuOpen(false)}
+              className="block text-center w-full py-6 bg-cyan-400 text-slate-950 font-black rounded-2xl text-sm uppercase tracking-widest shadow-[0_20px_40px_rgba(6,182,212,0.3)]"
+            >
+              INITIALIZE BUILD
+            </a>
+            <div className="mt-8 flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
+              <span>MUMBAI HQ</span>
+              <span className="text-cyan-500">Meena Tech Venture</span>
             </div>
           </div>
         </div>
-      </nav>
+      </div>
     </>
   );
 };

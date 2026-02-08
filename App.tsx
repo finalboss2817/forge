@@ -15,7 +15,6 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '') as AppSection;
-      // Only set if the hash is a valid section, otherwise default to HOME
       if (Object.values(AppSection).includes(hash)) {
         setActiveSection(hash);
       } else if (!hash || hash === 'home') {
@@ -24,7 +23,7 @@ const App: React.FC = () => {
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange(); // Initial check
+    handleHashChange(); // Run once on mount
     
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
