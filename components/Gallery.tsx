@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const Gallery: React.FC = () => {
@@ -10,42 +9,40 @@ const Gallery: React.FC = () => {
   ];
 
   return (
-    <section id="archive" className="py-24 bg-slate-950/50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tighter">THE ARCHIVE</h2>
-          <p className="text-slate-500 max-w-xl mx-auto text-sm uppercase font-bold tracking-[0.2em]">Showcasing 10+ Years of Meena Technologies Heritage</p>
+    <section id="archive" style={{ background: 'var(--surface)' }}>
+      <div className="container">
+        <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+          <h2 style={{ fontSize: '42px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-2px', marginBottom: '10px' }}>THE ARCHIVE</h2>
+          <p className="font-mono" style={{ color: 'var(--accent)', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '4px' }}>Proven Hardware Excellence</p>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px' }}>
           {projects.map((p, i) => (
-            <div key={i} className="group relative overflow-hidden rounded-3xl aspect-[16/10] bg-slate-900 border border-white/5">
+            <div key={i} style={{ 
+              position: 'relative', 
+              aspectRatio: '16/10', 
+              overflow: 'hidden', 
+              background: '#000',
+              border: '1px solid var(--border)'
+            }}>
               <img 
                 src={p.img} 
                 alt={p.title}
-                className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                style={{ width: '100%', height: '100%', objectCover: 'cover', opacity: 0.5 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-0 left-0 p-8">
-                <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest mb-2 block">{p.category}</span>
-                <h3 className="text-3xl font-bold font-display">{p.title}</h3>
-              </div>
-              <div className="absolute top-8 right-8">
-                <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                   </svg>
-                </div>
+              <div style={{ 
+                position: 'absolute', 
+                bottom: 0, 
+                left: 0, 
+                right: 0, 
+                padding: '40px',
+                background: 'linear-gradient(to top, rgba(0,0,0,1), transparent)'
+              }}>
+                <span className="font-mono" style={{ color: 'var(--accent)', fontSize: '10px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '10px', display: 'block' }}>{p.category}</span>
+                <h3 className="font-display" style={{ fontSize: '28px', margin: 0, color: 'white' }}>{p.title}</h3>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <button className="px-8 py-4 bg-white/5 border border-white/10 rounded-xl text-xs font-black uppercase tracking-[0.2em] hover:bg-white/10 transition-all">
-            VIEW FULL CATALOGUE
-          </button>
         </div>
       </div>
     </section>

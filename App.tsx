@@ -6,6 +6,7 @@ import RigArchitect from './components/RigArchitect';
 import DiagnosticMatrix from './components/DiagnosticMatrix';
 import ServiceSection from './components/ServiceSection';
 import Gallery from './components/Gallery';
+import Newsletter from './components/Newsletter';
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
@@ -28,10 +29,10 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar activeSection={activeSection} />
       
-      <main className="flex-grow pt-20">
+      <main style={{ flexGrow: 1, paddingTop: 'var(--nav-height)' }}>
         <div id="home">
           <Hero onCtaClick={() => window.location.hash = '#architect'} />
         </div>
@@ -51,6 +52,8 @@ const App: React.FC = () => {
         <div id="diagnostics">
           <DiagnosticMatrix />
         </div>
+
+        <Newsletter />
       </main>
 
       <Footer />
