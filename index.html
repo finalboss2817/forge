@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forge Customs | Pro PC Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --cyan: #06b6d4;
+        --amber: #f59e0b;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #020617;
+        color: #f8fafc;
+        overflow-x: hidden;
+      }
+      .font-display {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      
+      /* 3D Perspective Grid Background */
+      .perspective-grid {
+        position: fixed;
+        inset: 0;
+        background-image: 
+          linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+        background-size: 50px 50px;
+        transform: perspective(1000px) rotateX(60deg) translateY(-100px);
+        transform-origin: top;
+        z-index: -1;
+        mask-image: linear-gradient(to bottom, transparent, black);
+      }
+
+      .tilt-card {
+        transition: transform 0.3s ease-out;
+        transform-style: preserve-3d;
+      }
+      .tilt-card:hover {
+        transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+      }
+
+      .glass-card {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      .animate-float {
+        animation: float 4s ease-in-out infinite;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #020617; }
+      ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div class="perspective-grid"></div>
+    <div id="root"></div>
+  </body>
+</html>

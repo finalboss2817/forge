@@ -1,0 +1,7 @@
+{
+  "name": "Forge Customs - PC Architecture & Repair",
+  "description": "A high-end, AI-powered platform for custom PC builds, diagnostics, and performance optimization. Featuring an intelligent Build Architect and a Diagnostic Matrix to solve hardware issues instantly.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
