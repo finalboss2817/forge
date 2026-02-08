@@ -11,12 +11,17 @@ import Footer from './components/Footer';
 
 const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState<AppSection>(AppSection.HOME);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '') as AppSection;
-      if (Object.values(AppSection).includes(hash)) {
-        setActiveSection(hash);
+      try {
+        const hash = window.location.hash.replace('#', '') as AppSection;
+        if (Object.values(AppSection).includes(hash)) {
+          setActiveSection(hash);
+        }
+      } catch (e) {
+        console.error("Navigation error:", e);
       }
     };
     window.addEventListener('hashchange', handleHashChange);
@@ -35,19 +40,24 @@ const App: React.FC = () => {
   );
 
   const renderContent = () => {
-    switch (activeSection) {
-      case AppSection.HOME:
-        return renderHome();
-      case AppSection.ARCHITECT:
-        return <RigArchitect />;
-      case AppSection.DIAGNOSTICS:
-        return <DiagnosticMatrix />;
-      case AppSection.SERVICES:
-        return <ServiceSection />;
-      case AppSection.GALLERY:
-        return <Gallery />;
-      default:
-        return renderHome();
+    try {
+      switch (activeSection) {
+        case AppSection.HOME:
+          return renderHome();
+        case AppSection.ARCHITECT:
+          return <RigArchitect />;
+        case AppSection.DIAGNOSTICS:
+          return <DiagnosticMatrix />;
+        case AppSection.SERVICES:
+          return <ServiceSection />;
+        case AppSection.GALLERY:
+          return <Gallery />;
+        default:
+          return renderHome();
+      }
+    } catch (e) {
+      console.error("Content rendering error:", e);
+      return <div className="p-20 text-center text-cyan-500 font-bold">System Reboot Required. Please refresh.</div>;
     }
   };
 
