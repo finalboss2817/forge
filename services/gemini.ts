@@ -2,9 +2,14 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { BuildRecommendation, DiagnosticResult } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// Safety check for process to prevent module evaluation failure in browser
+const getAI = () => {
+  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : (window as any).API_KEY;
+  return new GoogleGenAI({ apiKey: apiKey || '' });
+};
 
 export const getBuildSuggestion = async (prompt: string): Promise<BuildRecommendation> => {
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: `Suggest a PC build for the following requirements: ${prompt}`,
@@ -41,6 +46,7 @@ export const getBuildSuggestion = async (prompt: string): Promise<BuildRecommend
 };
 
 export const getDiagnosticMatrix = async (issue: string): Promise<DiagnosticResult> => {
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: `Diagnose this PC hardware or software issue: ${issue}`,
