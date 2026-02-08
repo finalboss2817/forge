@@ -1,38 +1,29 @@
-
 import React from 'react';
 
 const services = [
   {
-    id: 'assembly',
-    title: 'Custom Assembly',
-    desc: 'From budget warriors to overkill workstations. We handle the torque, cable combs, and thermal paste.',
-    icon: '⚡',
-    gradient: 'from-cyan-500/20 to-blue-500/20',
-    waMsg: "Hi Forge Customs! I'm interested in a Custom PC Assembly service. Can you provide more details on the process and pricing?"
+    title: 'CUSTOM ASSEMBLY',
+    desc: 'High-torque integration for gaming, workstation, and extreme rigs.',
+    icon: '01',
+    waMsg: "Inquiry: Custom PC Assembly details required."
   },
   {
-    id: 'repair',
-    title: 'Precision Repair',
-    desc: 'Micro-soldering, capacitor replacement, and component-level diagnostics for dead hardware.',
-    icon: '🛠️',
-    gradient: 'from-purple-500/20 to-pink-500/20',
-    waMsg: "Hi Forge Customs! I have a hardware issue and need Precision Repair. How can I schedule a diagnostic for my system?"
+    title: 'PRECISION REPAIR',
+    desc: 'Component-level micro-soldering and complex diagnostic resolution.',
+    icon: '02',
+    waMsg: "Inquiry: Hardware Repair diagnostic requested."
   },
   {
-    id: 'software',
-    title: 'Software Forge',
-    desc: 'OS optimization, custom debloating, driver orchestration, and benchmark tuning for max FPS.',
-    icon: '💿',
-    gradient: 'from-orange-500/20 to-yellow-500/20',
-    waMsg: "Hi Forge Customs! I'm looking for Software optimization/debloating to improve my PC's performance and FPS. Can you help?"
+    title: 'SOFTWARE FORGE',
+    desc: 'OS optimization, bios tuning, and verified benchmark stress-testing.',
+    icon: '03',
+    waMsg: "Inquiry: Software Optimization service details."
   },
   {
-    id: 'cooling',
-    title: 'Watercooling',
-    desc: 'Custom hard-line loops, distro plates, and industrial-grade pumps for sub-zero style.',
-    icon: '💧',
-    gradient: 'from-emerald-500/20 to-teal-500/20',
-    waMsg: "Hi Forge Customs! I'm interested in a custom Hard-line Watercooling loop. Do you have a portfolio or price list for this?"
+    title: 'WATERCOOLING',
+    desc: 'Industrial-grade hard-line liquid loops for thermal management.',
+    icon: '04',
+    waMsg: "Inquiry: Liquid Cooling portfolio requested."
   }
 ];
 
@@ -44,39 +35,29 @@ const ServiceSection: React.FC = () => {
   };
 
   return (
-    <section id="services" className="py-24 bg-slate-950">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div className="max-w-xl">
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 uppercase tracking-tighter">SERVICES <span className="text-cyan-500">PIPELINE</span></h2>
-            <p className="text-slate-400 font-medium">Professional hardware solutions by <span className="text-cyan-400 font-bold">Meena Technologies</span>. No generic fixes, only optimized silicon results.</p>
-          </div>
-          <div className="flex space-x-2">
-            <div className="w-12 h-1.5 bg-cyan-500 rounded-full"></div>
-            <div className="w-6 h-1.5 bg-slate-800 rounded-full"></div>
-            <div className="w-6 h-1.5 bg-slate-800 rounded-full"></div>
-          </div>
+    <section id="services" className="py-32 bg-zinc-950 border-y border-white/5">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-20">
+          <h2 className="font-display text-5xl font-black uppercase tracking-tighter text-white">CORE <span className="text-red-600">CAPABILITIES</span></h2>
+          <p className="font-mono text-xs text-zinc-500 uppercase tracking-widest mt-2">Hardware Operations // Deployment Pipeline</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-0 border border-white/10">
           {services.map((service, idx) => (
             <div 
               key={idx}
               onClick={() => handleInquiry(service.waMsg)}
-              className={`group cursor-pointer p-8 rounded-[2.5rem] bg-gradient-to-br ${service.gradient} border border-white/5 hover:border-cyan-500/40 transition-all hover:-translate-y-2 relative overflow-hidden`}
+              className="group cursor-pointer p-10 bg-black hover:bg-red-600 transition-all border-r border-white/10 last:border-r-0"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="text-5xl mb-8 group-hover:scale-110 transition-transform duration-500">{service.icon}</div>
-              <h3 className="text-2xl font-black mb-4 font-display group-hover:text-cyan-400 transition-colors uppercase tracking-tighter">{service.title}</h3>
-              <p className="text-sm text-slate-400 leading-relaxed font-medium mb-8">{service.desc}</p>
+              <div className="font-mono text-4xl font-black text-white/10 group-hover:text-black/20 mb-12 transition-colors">{service.icon}</div>
+              <h3 className="text-xl font-display font-black text-white mb-4 uppercase tracking-tighter italic group-hover:text-black transition-colors">{service.title}</h3>
+              <p className="font-mono text-xs text-zinc-500 group-hover:text-white/80 transition-colors leading-relaxed mb-8">{service.desc}</p>
               
-              <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between">
-                <span className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.2em]">INITIATE INQUIRY</span>
-                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-slate-950 transition-all">
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </div>
+              <div className="flex items-center justify-between pt-6 border-t border-white/10 group-hover:border-black/20">
+                <span className="font-mono text-[9px] font-black text-red-600 group-hover:text-white uppercase tracking-widest">DEPLOY</span>
+                <svg className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </div>
             </div>
           ))}

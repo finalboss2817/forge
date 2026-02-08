@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { commonIssues } from '../services/buildData';
 
@@ -10,54 +9,53 @@ const DiagnosticMatrix: React.FC = () => {
   );
 
   return (
-    <section id="diagnostics" className="max-w-6xl mx-auto px-4 py-24">
-      <div className="text-center mb-16">
-        <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tighter">HARDWARE <span className="text-cyan-500">ORACLE</span></h2>
-        <p className="text-slate-400 max-w-2xl mx-auto">Instant expert documentation for hardware malfunctions and performance bottlenecks. No AI required, just pure engineering data.</p>
-      </div>
-
-      <div className="mb-12">
-        <div className="relative max-w-2xl mx-auto">
+    <section id="diagnostics" className="max-w-7xl mx-auto px-6 py-32 bg-black">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+        <div>
+          <h2 className="font-display text-5xl font-black uppercase tracking-tighter">FAILSAFE <span className="text-red-600">PROTOCOL</span></h2>
+          <p className="font-mono text-xs text-zinc-500 uppercase tracking-widest mt-2">Hardware Error Database // Local Host</p>
+        </div>
+        <div className="w-full md:w-96 relative">
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search symptoms (e.g. black screen, blue screen)..."
-            className="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all placeholder:text-slate-600"
+            placeholder="INPUT SYMPTOM_DATA..."
+            className="w-full bg-zinc-900 border border-white/10 px-6 py-4 text-white font-mono text-sm focus:outline-none focus:border-red-600 transition-all placeholder:text-zinc-700"
           />
-          <div className="absolute right-6 top-1/2 -translate-y-1/2 text-cyan-500 font-bold text-xs uppercase tracking-widest">Live Search</div>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 bg-red-600 animate-pulse"></div>
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 overflow-hidden">
         {filteredIssues.length > 0 ? filteredIssues.map((issue, idx) => (
-          <div key={idx} className="glass-card p-8 rounded-3xl border-white/5 hover:border-cyan-500/20 transition-all group hover:scale-[1.01]">
-            <div className="flex justify-between items-start mb-6">
-              <span className={`px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
-                issue.difficulty === 'Low' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
-                issue.difficulty === 'Medium' ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' :
-                'bg-red-500/10 text-red-400 border border-red-500/20'
+          <div key={idx} className="bg-black p-10 hover:bg-zinc-900 transition-all group">
+            <div className="flex justify-between items-start mb-8">
+              <span className={`font-mono text-[9px] px-3 py-1 font-black uppercase tracking-widest border ${
+                issue.difficulty === 'Low' ? 'border-zinc-800 text-zinc-500' :
+                issue.difficulty === 'Medium' ? 'border-red-900/50 text-red-700' :
+                'border-red-600 text-red-600'
               }`}>
-                Difficulty: {issue.difficulty}
+                DIFF: {issue.difficulty}
               </span>
-              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-xl">🛠️</div>
+              <span className="font-mono text-xs text-zinc-800">#ERR_{idx + 100}</span>
             </div>
-            <h3 className="text-xl font-display font-bold text-white mb-4 uppercase">{issue.symptom}</h3>
-            <div className="p-4 bg-slate-950/50 rounded-xl border border-white/5 mb-6">
-              <p className="text-sm text-slate-400 leading-relaxed font-medium">
-                <span className="text-cyan-500 font-bold">Solution:</span> {issue.solution}
+            <h3 className="text-2xl font-display font-black text-white mb-6 uppercase tracking-tighter italic">{issue.symptom}</h3>
+            <div className="p-6 bg-zinc-900 border-l-2 border-red-600 mb-8">
+              <p className="font-mono text-xs text-zinc-400 leading-relaxed">
+                <span className="text-white font-bold block mb-1">REMEDIATION:</span> {issue.solution}
               </p>
             </div>
             <button 
               onClick={() => window.open('https://wa.me/919820567505', '_blank')}
-              className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.2em] group-hover:text-white transition-colors"
+              className="font-mono text-[10px] font-black text-zinc-600 uppercase tracking-widest group-hover:text-red-500 transition-colors"
             >
-              Consult Senior Tech →
+              [ CONNECT_ENGINEER ]
             </button>
           </div>
         )) : (
-          <div className="col-span-full py-20 text-center glass-card rounded-3xl">
-             <p className="text-slate-500 font-bold uppercase tracking-widest">No matching symptoms in local database. Contact support.</p>
+          <div className="col-span-full py-32 text-center bg-black">
+             <p className="font-mono text-xs text-zinc-700 uppercase tracking-widest">ERROR: No match in hardware repository.</p>
           </div>
         )}
       </div>

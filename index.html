@@ -3,44 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forge Customs | Premium PC Engineering</title>
+    <title>FORGE CUSTOMS | Industrial PC Engineering</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-      :root { --cyan: #06b6d4; }
+      :root { 
+        --accent: #ef4444; /* Hazard Red */
+        --bg: #000000;
+        --surface: #0a0a0a;
+      }
       body {
         font-family: 'Inter', sans-serif;
-        background-color: #020617;
-        color: #f8fafc;
+        background-color: var(--bg);
+        color: #ffffff;
         margin: 0;
         padding: 0;
+        letter-spacing: -0.01em;
       }
       .font-display { font-family: 'Space Grotesk', sans-serif; }
+      .font-mono { font-family: 'JetBrains Mono', monospace; }
       
-      .meena-gradient {
-        background: linear-gradient(90deg, #22d3ee, #3b82f6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      .industrial-grid {
+        background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+        background-size: 40px 40px;
       }
 
-      .glass-card {
-        background: rgba(15, 23, 42, 0.8);
+      .sharp-card {
+        background: var(--surface);
         border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
       }
 
-      /* Simple scrollbar */
-      ::-webkit-scrollbar { width: 6px; }
-      ::-webkit-scrollbar-track { background: #020617; }
-      ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-      ::-webkit-scrollbar-thumb:hover { background: #334155; }
+      .hazard-strip {
+        background: repeating-linear-gradient(
+          45deg,
+          #ef4444,
+          #ef4444 10px,
+          #000000 10px,
+          #000000 20px
+        );
+      }
 
       #root {
         min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
+
+      /* Transitions */
+      .hover-accent:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      
+      button:active { transform: scale(0.98); }
     </style>
 
     <script type="importmap">
@@ -55,7 +75,7 @@
 }
 </script>
   </head>
-  <body>
+  <body class="industrial-grid">
     <div id="root"></div>
   </body>
 </html>

@@ -6,44 +6,49 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onCtaClick }) => {
   return (
-    <section className="relative min-h-[90vh] flex items-center py-20 px-4">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-        <div className="text-center lg:text-left">
-          <div className="inline-block px-4 py-2 rounded-lg bg-cyan-950/30 border border-cyan-500/30 text-cyan-400 text-xs font-bold mb-6 tracking-widest uppercase">
-            Official Meena Technologies Venture
+    <section className="relative min-h-[90vh] flex items-center pt-20 px-6 overflow-hidden">
+      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <div className="flex items-center space-x-3 mb-8">
+            <div className="h-[2px] w-12 bg-red-600"></div>
+            <span className="font-mono text-xs font-bold text-red-500 uppercase tracking-[0.3em]">Hardware Division // 01</span>
           </div>
           
-          <h1 className="font-display text-6xl md:text-8xl font-black leading-none tracking-tighter mb-6">
-            FORGE <br/>
-            <span className="text-cyan-500">LIMITLESS.</span>
+          <h1 className="font-display text-7xl md:text-9xl font-black leading-[0.85] tracking-tighter mb-8 uppercase">
+            RAW <br/>
+            <span className="text-white">POWER.</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-slate-400 mb-10 max-w-xl mx-auto lg:mx-0">
-            Professional PC building and hardware solutions engineered for performance.
+          <p className="text-zinc-500 text-lg md:text-xl mb-12 max-w-lg font-medium leading-relaxed">
+            Meena Technologies presents Forge Customs. High-precision hardware engineering for those who demand absolute system dominance.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <button 
               onClick={onCtaClick}
-              className="w-full sm:w-auto px-10 py-5 bg-cyan-500 text-slate-950 font-bold rounded-xl hover:bg-white transition-colors uppercase tracking-widest text-sm"
+              className="px-12 py-5 bg-red-600 text-white font-black text-sm uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all"
             >
-              Start Build
+              CONSTRUCT RIG
             </button>
-            <a href="#archive" className="w-full sm:w-auto px-10 py-5 border border-white/20 rounded-xl font-bold text-sm tracking-widest uppercase hover:bg-white/5 transition-colors text-center">
-              View Archive
+            <a href="#archive" className="px-12 py-5 border border-white/20 text-white font-black text-sm uppercase tracking-[0.2em] hover:bg-white/5 text-center transition-all">
+              DATA ARCHIVE
             </a>
           </div>
         </div>
 
-        <div className="hidden lg:flex justify-center">
-          <div className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden border border-white/10 glass-card p-8">
-            <div className="h-full w-full bg-gradient-to-br from-cyan-900/20 to-slate-900 rounded-2xl flex flex-col items-center justify-center space-y-4">
-              <div className="text-6xl">⚡</div>
-              <div className="text-center">
-                <div className="font-display font-black text-2xl mb-1">PREMIUM HARDWARE</div>
-                <div className="text-slate-500 text-xs tracking-widest uppercase">Verified by Meena Tech</div>
-              </div>
-            </div>
+        <div className="hidden lg:block relative">
+          <div className="aspect-square border border-white/10 bg-zinc-900/50 p-4 relative overflow-hidden">
+             <div className="absolute top-0 right-0 w-32 h-32 hazard-strip opacity-20"></div>
+             <div className="h-full w-full border border-white/5 flex flex-col items-center justify-center space-y-4">
+                <span className="font-mono text-[100px] leading-none text-white/5 font-black">4090</span>
+                <div className="text-center">
+                   <p className="font-mono text-xs text-red-500 font-bold uppercase tracking-widest">System Architecture</p>
+                   <p className="font-display font-black text-2xl text-white uppercase italic tracking-tighter">Verified Integrity</p>
+                </div>
+             </div>
+             <div className="absolute bottom-4 left-4 font-mono text-[10px] text-zinc-600 uppercase tracking-widest">
+                Lat: 19.2045 | Lng: 72.8522
+             </div>
           </div>
         </div>
       </div>
