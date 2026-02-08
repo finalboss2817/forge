@@ -1,114 +1,63 @@
 
 import React, { useState } from 'react';
-import { getDiagnosticMatrix } from '../services/gemini';
-import { DiagnosticResult } from '../types';
+import { commonIssues } from '../services/buildData';
 
 const DiagnosticMatrix: React.FC = () => {
-  const [issue, setIssue] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [report, setReport] = useState<DiagnosticResult | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleDiagnose = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!issue.trim()) return;
-    setLoading(true);
-    try {
-      const result = await getDiagnosticMatrix(issue);
-      setReport(result);
-    } catch (error: any) {
-      console.error("Diagnostic Error:", error);
-      const errorMsg = error?.message || "";
-      if (errorMsg.includes("API key must be set") || errorMsg.includes("403") || errorMsg.includes("entity was not found")) {
-        if (window.aistudio?.openSelectKey) {
-          alert("Meena Tech Forge requires a linked API key to run diagnostics. Please select your project.");
-          await window.aistudio.openSelectKey();
-        } else {
-          alert("API Key is missing. Please ensure process.env.API_KEY is configured.");
-        }
-      } else {
-        alert("Diagnostic failure. Signal lost. Please retry.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  const filteredIssues = commonIssues.filter(i => 
+    i.symptom.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <section id="diagnostics" className="max-w-4xl mx-auto px-4 py-24">
+    <section id="diagnostics" className="max-w-6xl mx-auto px-4 py-24">
       <div className="text-center mb-16">
-        <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tighter">DIAGNOSTIC <span className="text-cyan-500">MATRIX</span></h2>
-        <p className="text-slate-400 max-w-2xl mx-auto">Instant expert analysis for hardware malfunctions, driver conflicts, or performance bottlenecks. Input your symptoms below.</p>
+        <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tighter">HARDWARE <span className="text-cyan-500">ORACLE</span></h2>
+        <p className="text-slate-400 max-w-2xl mx-auto">Instant expert documentation for hardware malfunctions and performance bottlenecks. No AI required, just pure engineering data.</p>
       </div>
 
-      <div className="max-w-4xl mx-auto">
-        <form onSubmit={handleDiagnose} className="flex flex-col sm:flex-row gap-4 mb-12">
+      <div className="mb-12">
+        <div className="relative max-w-2xl mx-auto">
           <input
             type="text"
-            value={issue}
-            onChange={(e) => setIssue(e.target.value)}
-            placeholder="e.g., PC boots but screen remains black, single long beep..."
-            className="flex-grow bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all placeholder:text-slate-600"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search symptoms (e.g. black screen, blue screen)..."
+            className="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all placeholder:text-slate-600"
           />
-          <button
-            disabled={loading}
-            className="px-8 py-4 bg-white text-slate-950 font-bold rounded-xl hover:bg-cyan-400 transition-all disabled:opacity-50 shadow-[0_10px_30px_rgba(255,255,255,0.05)]"
-          >
-            {loading ? 'ANALYZING...' : 'RUN SCAN'}
-          </button>
-        </form>
+          <div className="absolute right-6 top-1/2 -translate-y-1/2 text-cyan-500 font-bold text-xs uppercase tracking-widest">Live Search</div>
+        </div>
+      </div>
 
-        {report && (
-          <div className="grid md:grid-cols-3 gap-6 animate-in fade-in zoom-in duration-300">
-            <div className="md:col-span-2 space-y-6">
-              <div className="bg-white/5 border border-white/10 p-8 rounded-2xl">
-                <h3 className="text-xl font-bold font-display text-cyan-400 mb-4 uppercase">TECHNICIAN'S SUMMARY</h3>
-                <p className="text-slate-300 mb-6 leading-relaxed">{report.problemSummary}</p>
-                
-                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">POSSIBLE CAUSES</h4>
-                <ul className="space-y-2">
-                  {report.possibleCauses.map((cause, i) => (
-                    <li key={i} className="flex items-center space-x-3 text-sm text-slate-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
-                      <span>{cause}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="bg-white/5 border border-white/10 p-8 rounded-2xl">
-                <h3 className="text-xl font-bold font-display text-blue-400 mb-4 uppercase">RECOVERY PROTOCOL</h3>
-                <div className="space-y-4">
-                  {report.suggestedSteps.map((step, i) => (
-                    <div key={i} className="flex space-x-4">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">
-                        {i + 1}
-                      </span>
-                      <p className="text-sm text-slate-300">{step}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+      <div className="grid md:grid-cols-2 gap-6">
+        {filteredIssues.length > 0 ? filteredIssues.map((issue, idx) => (
+          <div key={idx} className="glass-card p-8 rounded-3xl border-white/5 hover:border-cyan-500/20 transition-all group hover:scale-[1.01]">
+            <div className="flex justify-between items-start mb-6">
+              <span className={`px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
+                issue.difficulty === 'Low' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
+                issue.difficulty === 'Medium' ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' :
+                'bg-red-500/10 text-red-400 border border-red-500/20'
+              }`}>
+                Difficulty: {issue.difficulty}
+              </span>
+              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-xl">🛠️</div>
             </div>
-
-            <div className="space-y-6">
-              <div className="bg-white/5 border border-white/10 p-6 rounded-2xl text-center">
-                <span className="text-xs text-slate-500 block mb-2 uppercase font-bold tracking-widest">REPAIR DIFFICULTY</span>
-                <span className={`text-2xl font-bold font-display ${
-                  report.difficulty === 'Low' ? 'text-green-400' :
-                  report.difficulty === 'Medium' ? 'text-yellow-400' :
-                  'text-red-400'
-                }`}>
-                  {report.difficulty.toUpperCase()}
-                </span>
-              </div>
-              <div className="bg-gradient-to-br from-cyan-600 to-blue-700 p-8 rounded-2xl text-white shadow-xl">
-                <h4 className="font-bold mb-2">Need Pro Help?</h4>
-                <p className="text-sm text-white/80 mb-6 leading-relaxed">Our senior technicians at <b>Meena Technologies</b> can handle this fix remotely or on-site.</p>
-                <button className="w-full py-3 bg-white text-slate-900 rounded-xl font-black text-xs hover:bg-slate-100 transition-colors uppercase tracking-widest">
-                  BOOK APPOINTMENT
-                </button>
-              </div>
+            <h3 className="text-xl font-display font-bold text-white mb-4 uppercase">{issue.symptom}</h3>
+            <div className="p-4 bg-slate-950/50 rounded-xl border border-white/5 mb-6">
+              <p className="text-sm text-slate-400 leading-relaxed font-medium">
+                <span className="text-cyan-500 font-bold">Solution:</span> {issue.solution}
+              </p>
             </div>
+            <button 
+              onClick={() => window.open('https://wa.me/919820567505', '_blank')}
+              className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.2em] group-hover:text-white transition-colors"
+            >
+              Consult Senior Tech →
+            </button>
+          </div>
+        )) : (
+          <div className="col-span-full py-20 text-center glass-card rounded-3xl">
+             <p className="text-slate-500 font-bold uppercase tracking-widest">No matching symptoms in local database. Contact support.</p>
           </div>
         )}
       </div>

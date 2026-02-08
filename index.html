@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Forge Customs | Powered by Meena Technologies</title>
     
-    <!-- Process Shim for Browser Environment -->
-    <script>
-      window.process = { env: { API_KEY: "" } };
-    </script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,6 +39,7 @@
         background: rgba(15, 23, 42, 0.7);
         backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .meena-gradient {
@@ -52,8 +48,33 @@
         -webkit-text-fill-color: transparent;
       }
 
+      .glow-text {
+        text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+      }
+
       @keyframes spin { to { transform: rotate(360deg); } }
       .animate-spin-slow { animation: spin 10s linear infinite; }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+      .animate-float {
+        animation: float 5s ease-in-out infinite;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.2); border-radius: 20px; }
+      
+      .hover-3d:hover {
+        transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+      }
+
+      /* Refined Mobile 3D container */
+      .perspective-hero {
+        perspective: 2000px;
+      }
     </style>
 
     <script type="importmap">
@@ -62,7 +83,6 @@
     "react": "https://esm.sh/react@19.0.0",
     "react-dom": "https://esm.sh/react-dom@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "@google/genai": "https://esm.sh/@google/genai@1.40.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/"
   }
@@ -71,11 +91,6 @@
   </head>
   <body>
     <div class="perspective-grid"></div>
-    <div id="root">
-      <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #020617;">
-        <div style="width: 32px; height: 32px; border: 2px solid rgba(6, 182, 212, 0.1); border-top-color: #06b6d4; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
-        <p style="color: #06b6d4; margin-top: 16px; font-family: sans-serif; font-size: 10px; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase;">Meena Tech Core: Initializing...</p>
-      </div>
-    </div>
+    <div id="root"></div>
   </body>
 </html>
