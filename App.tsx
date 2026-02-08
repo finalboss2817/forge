@@ -15,23 +15,25 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '') as AppSection;
+      // Only set if the hash is a valid section, otherwise default to HOME
       if (Object.values(AppSection).includes(hash)) {
         setActiveSection(hash);
-      } else if (!hash) {
+      } else if (!hash || hash === 'home') {
         setActiveSection(AppSection.HOME);
       }
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange();
+    handleHashChange(); // Initial check
+    
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen bg-slate-950 flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200 w-full overflow-x-hidden">
       <Navbar activeSection={activeSection} />
       
-      <main className="flex-grow pt-10">
+      <main className="flex-grow pt-24">
         <div id="home">
           <Hero onCtaClick={() => window.location.hash = '#architect'} />
         </div>
