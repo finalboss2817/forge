@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { AppSection } from './types';
 import Navbar from './components/Navbar';
@@ -17,22 +16,22 @@ const App: React.FC = () => {
       const hash = window.location.hash.replace('#', '') as AppSection;
       if (Object.values(AppSection).includes(hash)) {
         setActiveSection(hash);
-      } else if (!hash || hash === 'home') {
+      } else if (!hash) {
         setActiveSection(AppSection.HOME);
       }
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange(); // Run once on mount
+    handleHashChange();
     
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200 w-full overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
       <Navbar activeSection={activeSection} />
       
-      <main className="flex-grow pt-24">
+      <main className="flex-grow pt-20">
         <div id="home">
           <Hero onCtaClick={() => window.location.hash = '#architect'} />
         </div>
