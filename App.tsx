@@ -24,7 +24,6 @@ const App: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Home view includes all sections sequentially for lead scrolling
   const renderHome = () => (
     <>
       <div id="home"><Hero onCtaClick={() => window.location.hash = '#architect'} /></div>

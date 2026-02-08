@@ -15,16 +15,26 @@ const DiagnosticMatrix: React.FC = () => {
     try {
       const result = await getDiagnosticMatrix(issue);
       setReport(result);
-    } catch (error) {
-      console.error(error);
-      alert("Diagnostic failure. Retry signal.");
+    } catch (error: any) {
+      console.error("Diagnostic Error:", error);
+      const errorMsg = error?.message || "";
+      if (errorMsg.includes("API key must be set") || errorMsg.includes("403") || errorMsg.includes("entity was not found")) {
+        if (window.aistudio?.openSelectKey) {
+          alert("Meena Tech Forge requires a linked API key to run diagnostics. Please select your project.");
+          await window.aistudio.openSelectKey();
+        } else {
+          alert("API Key is missing. Please ensure process.env.API_KEY is configured.");
+        }
+      } else {
+        alert("Diagnostic failure. Signal lost. Please retry.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section id="diagnostics" className="max-w-7xl mx-auto px-4 py-24">
+    <section id="diagnostics" className="max-w-4xl mx-auto px-4 py-24">
       <div className="text-center mb-16">
         <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 uppercase tracking-tighter">DIAGNOSTIC <span className="text-cyan-500">MATRIX</span></h2>
         <p className="text-slate-400 max-w-2xl mx-auto">Instant expert analysis for hardware malfunctions, driver conflicts, or performance bottlenecks. Input your symptoms below.</p>

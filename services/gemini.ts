@@ -2,19 +2,13 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { BuildRecommendation, DiagnosticResult } from "../types";
 
-// Safety check for process to prevent module evaluation failure in browser
-const getAI = () => {
-  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : (window as any).API_KEY;
-  return new GoogleGenAI({ apiKey: apiKey || '' });
-};
-
 export const getBuildSuggestion = async (prompt: string): Promise<BuildRecommendation> => {
-  const ai = getAI();
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: `Suggest a PC build for the following requirements: ${prompt}`,
     config: {
-      systemInstruction: "You are a world-class PC hardware architect. Provide high-performance, optimized build recommendations. Be specific about model names and explain why each part was chosen for the specific user need.",
+      systemInstruction: "You are a world-class PC hardware architect. Provide high-performance, optimized build recommendations. Be specific about model names and explain why each part was chosen for the specific user need. Your work is representing the elite standards of Meena Technologies Mumbai.",
       responseMimeType: "application/json",
       responseSchema: {
         type: Type.OBJECT,
@@ -46,12 +40,12 @@ export const getBuildSuggestion = async (prompt: string): Promise<BuildRecommend
 };
 
 export const getDiagnosticMatrix = async (issue: string): Promise<DiagnosticResult> => {
-  const ai = getAI();
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: `Diagnose this PC hardware or software issue: ${issue}`,
     config: {
-      systemInstruction: "You are a professional PC technician. Provide a technical diagnostic report based on the symptom. Suggest actionable steps and estimate the difficulty of the repair.",
+      systemInstruction: "You are a senior professional PC technician at Meena Technologies. Provide a technical diagnostic report based on the symptom. Suggest actionable steps and estimate the difficulty of the repair.",
       responseMimeType: "application/json",
       responseSchema: {
         type: Type.OBJECT,

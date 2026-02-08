@@ -18,9 +18,19 @@ const RigArchitect: React.FC = () => {
     try {
       const result = await getBuildSuggestion(prompt);
       setRecommendation(result);
-    } catch (error) {
-      console.error(error);
-      alert("System overload. Please try again.");
+    } catch (error: any) {
+      console.error("Architect Error:", error);
+      const errorMsg = error?.message || "";
+      if (errorMsg.includes("API key must be set") || errorMsg.includes("403") || errorMsg.includes("entity was not found")) {
+        if (window.aistudio?.openSelectKey) {
+          alert("Meena Tech Forge requires a linked API key. Please select your project in the next dialog.");
+          await window.aistudio.openSelectKey();
+        } else {
+          alert("API Key is missing. Please ensure process.env.API_KEY is configured.");
+        }
+      } else {
+        alert("Neural link interrupted. Please check your connection and try again.");
+      }
     } finally {
       setLoading(false);
     }
