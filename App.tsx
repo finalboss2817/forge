@@ -16,7 +16,7 @@ const App: React.FC = () => {
       const hash = window.location.hash.replace('#', '') as AppSection;
       if (Object.values(AppSection).includes(hash)) {
         setActiveSection(hash);
-      } else if (!hash) {
+      } else if (!hash || hash === 'home') {
         setActiveSection(AppSection.HOME);
       }
     };
